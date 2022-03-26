@@ -7,8 +7,15 @@
     border-radius: 10px;
 }
 
+.button:hover {
+    opacity: 0.8;
+}
+
+.button:active {
+    opacity: 0.8;
+    background-color: steelblue;
+}
+
 .disabled {
-    opacity: 0.5;
-    /*background-color: blueviolet;*/
-    /*color: lightgray;*/
+    opacity: 0.3;
 }

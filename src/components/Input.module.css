@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    justify-content: space-around;
+    height: min-content;
+}
+
+.span {
+    color: cadetblue;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.input {
+    display: inline-block;
+    height: min-content;
+    width: 50px;
+    text-align: center;
+    border: 2px solid cadetblue;
+    border-radius: 5px;
+    color: cadetblue;
+}
