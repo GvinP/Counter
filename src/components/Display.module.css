@@ -1,0 +1,15 @@
+.display {
+    margin: 20px auto;
+    padding-top: 10px;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    width: 150px;
+    height: 50px;
+    background-color: cadetblue;
+    border-radius: 10px;
+}
+
+.red {
+    color: red;
+}

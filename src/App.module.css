@@ -1,0 +1,19 @@
+.app {
+  margin: 100px auto;
+  text-align: center;
+  width: 200px;
+  height: 150px;
+  border: 2px solid cadetblue;
+  border-radius: 10px;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-around;
+  margin: 10px auto;
+  padding-top: 5px;
+  width: 150px;
+  height: 30px;
+  border: 2px solid cadetblue;
+  border-radius: 10px;
+}
