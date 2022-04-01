@@ -10,7 +10,9 @@ function App() {
     let [startValue, setStartValue] = useState<number>(0)
     let [error, setError] = useState('')
     let [incButton, setIncButton] = useState<boolean>(false)
-    let [resetButton, resetResetButton] = useState<boolean>(false)
+    let [resetButton, setResetButton] = useState<boolean>(false)
+    let [setButton, setSetButton] = useState<boolean>(false)
+
     useEffect(() => {
         let maxValue = localStorage.getItem('maxCounterValue')
         if (maxValue) {
@@ -47,7 +49,8 @@ function App() {
         setCounterValue(startValue)
         setError('')
         setIncButton(false)
-        resetResetButton(false)
+        setResetButton(false)
+        setSetButton(true)
     }
 
     const setMaxValueHandler = (value: string) => {
@@ -55,8 +58,8 @@ function App() {
             setMaxValue(JSON.parse(value))
             setError('enter values and press `set`')
             setIncButton(true)
-            resetResetButton(true)
-            // setCounterValue(startValue)
+            setResetButton(true)
+            setSetButton(false)
         }
         if (JSON.parse(value) === startValue) {
             setError('Incorrect value!')
@@ -67,8 +70,8 @@ function App() {
             setStartValue(JSON.parse(value))
             setError('enter values and press `set`')
             setIncButton(true)
-            resetResetButton(true)
-            // setCounterValue(startValue)
+            setResetButton(true)
+            setSetButton(false)
         }
         if (JSON.parse(value) === -1 || JSON.parse(value) === maxValue) {
             setError('Incorrect value!')
@@ -82,7 +85,7 @@ function App() {
                     <Input name={'start value:'} onChange={setStartValueHandler} value={startValue} secondValue={maxValue}/>
                 </div>
                 <div className={style.buttonsContainer}>
-                    <Button name={'set'} onClick={setCounter} disabled={startValue === -1 || startValue === maxValue}/>
+                    <Button name={'set'} onClick={setCounter} disabled={startValue === -1 || startValue === maxValue|| setButton}/>
                 </div>
 
             </div>

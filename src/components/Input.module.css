@@ -21,7 +21,8 @@
 }
 
 .red {
+    color: black;
     background-color: salmon;
-    border-color: salmon;
-    outline: salmon;
+    border-color: red;
+    outline: red;
 }
