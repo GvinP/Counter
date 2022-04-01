@@ -19,3 +19,9 @@
     border-radius: 5px;
     color: cadetblue;
 }
+
+.red {
+    background-color: salmon;
+    border-color: salmon;
+    outline: salmon;
+}
