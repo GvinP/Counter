@@ -3,6 +3,7 @@ import style from './App.module.css';
 import {Display} from "./components/Display";
 import {Button} from "./components/Button";
 import {Input} from "./components/Input";
+import {BrowserRouter, NavLink, Route, Routes} from 'react-router-dom';
 
 function App() {
     let [counterValue, setCounterValue] = useState<number>(0)
@@ -50,13 +51,13 @@ function App() {
         setError('')
         setIncButton(false)
         setResetButton(false)
-        setSetButton(true)
+        // setSetButton(true)
     }
 
     const setMaxValueHandler = (value: string) => {
         if (JSON.parse(value) >= startValue) {
             setMaxValue(JSON.parse(value))
-            setError('enter values and press `set`')
+            setError('enter values and press \'set\'')
             setIncButton(true)
             setResetButton(true)
             setSetButton(false)
@@ -68,7 +69,7 @@ function App() {
     const setStartValueHandler = (value: string) => {
         if (JSON.parse(value) >= -1 && JSON.parse(value) <= maxValue) {
             setStartValue(JSON.parse(value))
-            setError('enter values and press `set`')
+            setError('enter values and press \'set\'')
             setIncButton(true)
             setResetButton(true)
             setSetButton(false)
@@ -79,23 +80,40 @@ function App() {
     }
     return (
         <div className={style.wrapper}>
-            <div className={style.container}>
-                <div className={style.inputsContainer}>
-                    <Input name={'max value:'} onChange={setMaxValueHandler} value={maxValue} secondValue={startValue}/>
-                    <Input name={'start value:'} onChange={setStartValueHandler} value={startValue} secondValue={maxValue}/>
-                </div>
-                <div className={style.buttonsContainer}>
-                    <Button name={'set'} onClick={setCounter} disabled={startValue === -1 || startValue === maxValue|| setButton}/>
-                </div>
-
-            </div>
-            <div className={style.container}>
-                <Display counterValue={counterValue} maxValue={maxValue} error={error}/>
-                <div className={style.buttonsContainer}>
-                    <Button name={'inc'} onClick={incrementCounter} disabled={incButton||counterValue === maxValue}/>
-                    <Button name={'reset'} onClick={resetCounter} disabled={resetButton||counterValue === startValue}/>
-                </div>
-            </div>
+            <BrowserRouter>
+                <Routes>
+                    <Route path={'/1'} element={
+                        <div className={style.container}>
+                            <div className={style.inputsContainer}>
+                                <Input name={'max value:'} onChange={setMaxValueHandler} value={maxValue}
+                                       secondValue={startValue}/>
+                                <Input name={'start value:'} onChange={setStartValueHandler} value={startValue}
+                                       secondValue={maxValue}/>
+                            </div>
+                            <div className={style.buttonsContainer}>
+                                <NavLink to={'/2'} style={{textDecoration: "none"}}>
+                                    <Button name={'set'} onClick={setCounter}
+                                            disabled={startValue === -1 || startValue === maxValue || setButton}/>
+                                </NavLink>
+                            </div>
+                        </div>
+                    }/>
+                    <Route path={'/2'} element={
+                        <div className={style.container}>
+                            <Display counterValue={counterValue} maxValue={maxValue} error={error}/>
+                            <div className={style.buttonsContainer}>
+                                <Button name={'inc'} onClick={incrementCounter}
+                                        disabled={incButton || counterValue === maxValue}/>
+                                <Button name={'reset'} onClick={resetCounter}
+                                        disabled={resetButton || counterValue === startValue}/>
+                                <NavLink to={'/1'} style={{textDecoration: "none"}}>
+                                    <Button name={'set'} onClick={() => {}} disabled={false}/>
+                                </NavLink>
+                            </div>
+                        </div>
+                    }/>
+                </Routes>
+            </BrowserRouter>
         </div>
     );
 }
