@@ -16,8 +16,8 @@ import {
 
 
 function App() {
-    
-    let state: stateType = {
+
+    const state: stateType = {
         counterValue: 0,
         maxValue: 5,
         startValue: 0,

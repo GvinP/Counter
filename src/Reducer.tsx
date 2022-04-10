@@ -7,7 +7,7 @@ export type stateType = {
     resetButton: boolean,
     setButton: boolean
 }
-type actionType = {
+export type actionType = {
     type: string
     value?: string
 }
@@ -18,18 +18,18 @@ export const SET_COUNTER = 'SET-COUNTER'
 export const SET_MAX_VALUE = 'SET-MAX-VALUE'
 export const SET_START_VALUE = 'SET-START-VALUE'
 export const reducer = (counterState: stateType, action: actionType): stateType => {
-    let counterStateCopy = {...counterState}
+    const counterStateCopy = {...counterState}
     switch (action.type) {
         case SET_VALUES_FROM_LOCAL_STORAGE:
-            let maxValue = localStorage.getItem('maxCounterValue')
+            const maxValue = localStorage.getItem('maxCounterValue')
             if (maxValue) {
                 counterStateCopy.maxValue = JSON.parse(maxValue)
             }
-            let startValue = localStorage.getItem('startCounterValue')
+            const startValue = localStorage.getItem('startCounterValue')
             if (startValue) {
                 counterStateCopy.startValue = JSON.parse(startValue)
             }
-            let counterValue = localStorage.getItem('CounterValue')
+            const counterValue = localStorage.getItem('CounterValue')
             if (counterValue) {
                 counterStateCopy.counterValue = JSON.parse(counterValue)
             }
