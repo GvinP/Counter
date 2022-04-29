@@ -10,24 +10,45 @@ import {
     setMaxValueAC,
     setStartValueAC,
     setValuesFromLocalStorageAC, stateType
-} from "./Reducer";
+} from "./reducer";
 import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "./store";
+import {Dispatch} from "redux";
 
 
 function App() {
-    const dispatch = useDispatch()
-    const counterState = useSelector<stateType, stateType>(state=> state)
+    const dispatch = useDispatch<Dispatch>()
+    const counterState = useSelector<AppStateType, stateType>(state => state.counter)
 
     useEffect(() => {
-        dispatch(setValuesFromLocalStorageAC())
-    }, [])
+        let maxValue = 0
+        let startValue = 0
+        let counterValue = 0
+        const maxValueFromLocalStorage = localStorage.getItem('maxCounterValue')
+        if (maxValueFromLocalStorage) {
+            maxValue = JSON.parse(maxValueFromLocalStorage)
+        }
+        const startValueFromLocalStorage = localStorage.getItem('startCounterValue')
+        if (startValueFromLocalStorage) {
+            startValue = JSON.parse(startValueFromLocalStorage)
+        }
+        const counterValueFromLocalStorage = localStorage.getItem('CounterValue')
+        if (counterValueFromLocalStorage) {
+            counterValue = JSON.parse(counterValueFromLocalStorage)
+        }
+        dispatch(setValuesFromLocalStorageAC(maxValue, startValue, counterValue))
+    }, [dispatch])
 
 
     useEffect(() => {
         localStorage.setItem('CounterValue', JSON.stringify(counterState.counterValue))
     }, [counterState.counterValue])
 
-
+    const setCounter = () => {
+        localStorage.setItem('maxCounterValue', JSON.stringify(counterState.maxValue))
+        localStorage.setItem('startCounterValue', JSON.stringify(counterState.startValue))
+        dispatch(setCounterAC())
+    }
     return (
         <div className={style.wrapper}>
             <div className={style.container}>
@@ -40,7 +61,7 @@ function App() {
                            secondValue={counterState.maxValue}/>
                 </div>
                 <div className={style.buttonsContainer}>
-                    <Button name={'set'} onClick={() => dispatch(setCounterAC())}
+                    <Button name={'set'} onClick={setCounter}
                             disabled={counterState.startValue === -1 || counterState.startValue === counterState.maxValue || counterState.setButton}/>
                 </div>
             </div>

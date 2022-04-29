@@ -7,7 +7,7 @@ import {
     SET_MAX_VALUE,
     SET_START_VALUE,
     SET_VALUES_FROM_LOCAL_STORAGE
-} from "./Reducer";
+} from "./reducer";
 
 test('counter value should be increased', () => {
     // data
