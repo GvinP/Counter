@@ -1,7 +1,7 @@
 import {
     reducer,
     INCREMENT_COUNTER,
-    stateType,
+    StateType,
     RESET_COUNTER,
     SET_COUNTER,
     SET_MAX_VALUE,
@@ -9,9 +9,10 @@ import {
     SET_VALUES_FROM_LOCAL_STORAGE
 } from "./reducer";
 
-test('counter value should be increased', () => {
-    // data
-    const state: stateType = {
+let state: StateType
+
+beforeEach(() => {
+    state = {
         counterValue: 0,
         maxValue: 5,
         startValue: 0,
@@ -20,23 +21,16 @@ test('counter value should be increased', () => {
         resetButton: false,
         setButton: false
     }
+})
+
+test('counter value should be increased', () => {
     // action
     const newState = reducer(state, {type: INCREMENT_COUNTER})
     // expectation
-  expect(newState.counterValue).toBe(state.counterValue+1);
+    expect(newState.counterValue).toBe(state.counterValue + 1);
 });
 
 test('counter value should be set to start value', () => {
-    // data
-    const state: stateType = {
-        counterValue: 0,
-        maxValue: 5,
-        startValue: 0,
-        error: '',
-        incButton: false,
-        resetButton: false,
-        setButton: false
-    }
     // action
     const newState = reducer(state, {type: RESET_COUNTER})
     // expectation
@@ -44,16 +38,6 @@ test('counter value should be set to start value', () => {
 });
 
 test('start counter value and maximum counter value should be set', () => {
-    // data
-    const state: stateType = {
-        counterValue: 0,
-        maxValue: 5,
-        startValue: 0,
-        error: '',
-        incButton: false,
-        resetButton: false,
-        setButton: false
-    }
     // action
     const newState = reducer(state, {type: SET_COUNTER})
     // expectation
@@ -65,16 +49,6 @@ test('start counter value and maximum counter value should be set', () => {
 });
 
 test('maximum counter value should be set', () => {
-    // data
-    const state: stateType = {
-        counterValue: 0,
-        maxValue: 5,
-        startValue: 0,
-        error: '',
-        incButton: false,
-        resetButton: false,
-        setButton: false
-    }
     // action
     const newState = reducer(state, {type: SET_MAX_VALUE, value: '8'})
     // expectation
@@ -86,16 +60,6 @@ test('maximum counter value should be set', () => {
 });
 
 test('start counter value should be set', () => {
-    // data
-    const state: stateType = {
-        counterValue: 0,
-        maxValue: 5,
-        startValue: 0,
-        error: '',
-        incButton: false,
-        resetButton: false,
-        setButton: false
-    }
     // action
     const newState = reducer(state, {type: SET_START_VALUE, value: '4'})
     // expectation
@@ -107,17 +71,7 @@ test('start counter value should be set', () => {
 });
 
 // test('values from local storage should be set', () => {
-//     // data
-//     const state: stateType = {
-//         counterValue: 0,
-//         maxValue: 5,
-//         startValue: 0,
-//         error: '',
-//         incButton: false,
-//         resetButton: false,
-//         setButton: false
-//     }
-//     // action
+//    // action
 //     const newState = reducer(state, {type: SET_VALUES_FROM_LOCAL_STORAGE})
 //     // expectation
 //     expect(newState.startValue).toBe(0);

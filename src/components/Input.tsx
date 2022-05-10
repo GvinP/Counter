@@ -12,8 +12,8 @@ export const Input = (props: InputPropsType) => {
     return (
         <div className={style.wrapper}>
             <span className={style.span}>{props.name}</span>
-            <input className={`${props.value === -1 ? style.red: ''}
-             ${props.value === props.secondValue ? style.red: ''} ${style.input}`}
+            <input className={`${props.value === -1 ? style.red : ''}
+             ${props.value === props.secondValue ? style.red : ''} ${style.input}`}
                    type={"number"} value={props.value}
                    onChange={(e) => props.onChange(e.currentTarget.value)}
             />

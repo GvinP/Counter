@@ -1,3 +1,5 @@
+import {Dispatch} from "redux";
+
 export const SET_VALUES_FROM_LOCAL_STORAGE = 'SET-VALUES-FROM-LOCAL-STORAGE'
 export const INCREMENT_COUNTER = 'INCREMENT-COUNTER'
 export const RESET_COUNTER = 'RESET-COUNTER'
@@ -5,7 +7,7 @@ export const SET_COUNTER = 'SET-COUNTER'
 export const SET_MAX_VALUE = 'SET-MAX-VALUE'
 export const SET_START_VALUE = 'SET-START-VALUE'
 
-export type stateType = {
+export type StateType = {
     counterValue: number,
     maxValue: number,
     startValue: number,
@@ -27,27 +29,6 @@ type resetCounterActionType = ReturnType<typeof resetCounterAC>
 type setCounterActionType = ReturnType<typeof setCounterAC>
 type setMaxValueActionType = ReturnType<typeof setMaxValueAC>
 type setStartValueActionType = ReturnType<typeof setStartValueAC>
-
-// type setValuesFromLocalStorageActionType = {
-//     type: 'SET-VALUES-FROM-LOCAL-STORAGE'
-// }
-// type incrementCounterActionType = {
-//     type: 'INCREMENT-COUNTER'
-// }
-// type resetCounterActionType = {
-//     type: 'RESET-COUNTER'
-// }
-// type setCounterActionType = {
-//     type: 'SET-COUNTER'
-// }
-// type setMaxValueActionType = {
-//     type: 'SET-MAX-VALUE',
-//     value: string
-// }
-// type setStartValueActionType = {
-//     type: 'SET-START-VALUE',
-//     value: string
-// }
 
 export const setValuesFromLocalStorageAC = (maxValue: number, startValue: number, counterValue: number) => {
     return {
@@ -87,7 +68,35 @@ export const setStartValueAC = (startValue: string) => {
     } as const
 }
 
-const initialState: stateType = {
+export const setValuesFromLocalStorageTC = () => (dispatch: Dispatch) => {
+    let maxValue = 0
+    let startValue = 0
+    let counterValue = 0
+    const maxValueFromLocalStorage = localStorage.getItem('maxCounterValue')
+    if (maxValueFromLocalStorage) {
+        maxValue = JSON.parse(maxValueFromLocalStorage)
+    }
+    const startValueFromLocalStorage = localStorage.getItem('startCounterValue')
+    if (startValueFromLocalStorage) {
+        startValue = JSON.parse(startValueFromLocalStorage)
+    }
+    const counterValueFromLocalStorage = localStorage.getItem('CounterValue')
+    if (counterValueFromLocalStorage) {
+        counterValue = JSON.parse(counterValueFromLocalStorage)
+    }
+    dispatch(setValuesFromLocalStorageAC(maxValue, startValue, counterValue))
+}
+export const setCounterTC = (startValue: number, maxValue: number) => (dispatch: Dispatch) => {
+    localStorage.setItem('maxCounterValue', JSON.stringify(maxValue))
+    localStorage.setItem('startCounterValue', JSON.stringify(startValue))
+    dispatch(setCounterAC())
+}
+export const setCounterValueTC = (counterValue: number) => () => {
+    localStorage.setItem('CounterValue', JSON.stringify(counterValue))
+}
+
+
+const initialState: StateType = {
     counterValue: 0,
     maxValue: 5,
     startValue: 0,
@@ -97,9 +106,8 @@ const initialState: stateType = {
     setButton: false
 }
 
-export const reducer = (counterState = initialState, action: actionType): stateType => {
+export const reducer = (counterState = initialState, action: actionType): StateType => {
     const counterStateCopy = {...counterState}
-
     switch (action.type) {
         case SET_VALUES_FROM_LOCAL_STORAGE:
             counterStateCopy.maxValue = action.payload.maxValue

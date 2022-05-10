@@ -6,48 +6,31 @@ import {Input} from "./components/Input";
 import {
     incrementCounterAC,
     resetCounterAC,
-    setCounterAC,
+    setCounterTC,
+    setCounterValueTC,
     setMaxValueAC,
     setStartValueAC,
-    setValuesFromLocalStorageAC, stateType
+    setValuesFromLocalStorageTC,
+    StateType
 } from "./reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "./store";
-import {Dispatch} from "redux";
+import {AppStateType, TypedDispatch} from "./store";
 
 
 function App() {
-    const dispatch = useDispatch<Dispatch>()
-    const counterState = useSelector<AppStateType, stateType>(state => state.counter)
+    const dispatch = useDispatch<TypedDispatch>()
+    const counterState = useSelector<AppStateType, StateType>(state => state.counter)
 
     useEffect(() => {
-        let maxValue = 0
-        let startValue = 0
-        let counterValue = 0
-        const maxValueFromLocalStorage = localStorage.getItem('maxCounterValue')
-        if (maxValueFromLocalStorage) {
-            maxValue = JSON.parse(maxValueFromLocalStorage)
-        }
-        const startValueFromLocalStorage = localStorage.getItem('startCounterValue')
-        if (startValueFromLocalStorage) {
-            startValue = JSON.parse(startValueFromLocalStorage)
-        }
-        const counterValueFromLocalStorage = localStorage.getItem('CounterValue')
-        if (counterValueFromLocalStorage) {
-            counterValue = JSON.parse(counterValueFromLocalStorage)
-        }
-        dispatch(setValuesFromLocalStorageAC(maxValue, startValue, counterValue))
+        dispatch(setValuesFromLocalStorageTC())
     }, [dispatch])
 
-
     useEffect(() => {
-        localStorage.setItem('CounterValue', JSON.stringify(counterState.counterValue))
-    }, [counterState.counterValue])
+        dispatch(setCounterValueTC(counterState.counterValue))
+    }, [counterState.counterValue, dispatch])
 
-    const setCounter = () => {
-        localStorage.setItem('maxCounterValue', JSON.stringify(counterState.maxValue))
-        localStorage.setItem('startCounterValue', JSON.stringify(counterState.startValue))
-        dispatch(setCounterAC())
+    const setCounter = (startValue: number, maxValue: number) => {
+        dispatch(setCounterTC(startValue, maxValue))
     }
     return (
         <div className={style.wrapper}>
@@ -61,7 +44,7 @@ function App() {
                            secondValue={counterState.maxValue}/>
                 </div>
                 <div className={style.buttonsContainer}>
-                    <Button name={'set'} onClick={setCounter}
+                    <Button name={'set'} onClick={() => setCounter(counterState.startValue, counterState.maxValue)}
                             disabled={counterState.startValue === -1 || counterState.startValue === counterState.maxValue || counterState.setButton}/>
                 </div>
             </div>
